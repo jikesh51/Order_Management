@@ -1,0 +1,1 @@
+{"_id":{"$oid":"5dd212eae0ab3d13d8e9abfd"},"username":"User1","password":"User1","createdAt":{"$date":{"$numberLong":"1574048490356"}},"updatedAt":{"$date":{"$numberLong":"1574048490356"}},"__v":{"$numberInt":"0"}}

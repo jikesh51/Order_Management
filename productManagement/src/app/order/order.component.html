@@ -1,0 +1,104 @@
+<div class="container">
+    <div class="mb-2">
+        <div class="text-right">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">New Order</button>
+        </div>
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">NEW ORDER</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                    </div>
+                    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                    <label for="recipient-name" class="col-form-label">Order Number:</label>
+                                    <input type="text" maxlength="6" (keypress)="changeValue($event)" formControlName="order_number" class="form-control" id="recipient-name">
+                                    <small *ngIf="submitted && form.controls['order_number'].invalid" class=" mb-4 form-text text-muted danger text-left">
+                                        <div *ngIf="f.order_number.errors.required" class="text-danger">Please enter order number.</div>
+                                    </small>
+                            </div>
+                            <div class="form-group">
+                                    <label for="recipient-name" class="col-form-label">Order Due Date:</label>
+                                    <input type="date" formControlName="order_due_date" class="form-control" id="recipient-name">
+                                    <small *ngIf="submitted && form.controls['order_due_date'].invalid" class=" mb-4 form-text text-muted danger text-left">
+                                        <div *ngIf="f.order_due_date.errors.required" class="text-danger">Please enter due date.</div>
+                                    </small>
+                            </div>
+                            <div class="form-group">
+                                    <label for="recipient-name" class="col-form-label">Customer Name:</label>
+                                    <input type="text" formControlName="customer_buyer_name" class="form-control" id="recipient-name">
+                                    <small *ngIf="submitted && form.controls['customer_buyer_name'].invalid" class=" mb-4 form-text text-muted danger text-left">
+                                        <div *ngIf="f.customer_buyer_name.errors.required" class="text-danger">Please enter customer name.</div>
+                                    </small>
+                            </div>
+                            <div class="form-group">
+                                    <label for="recipient-name" class="col-form-label">Customer Address:</label>
+                                    <input type="text" formControlName="customer_address" class="form-control" id="recipient-name">
+                                    <small *ngIf="submitted && form.controls['customer_address'].invalid" class=" mb-4 form-text text-muted danger text-left">
+                                        <div *ngIf="f.customer_address.errors.required" class="text-danger">Please enter customer address.</div>
+                                    </small>
+                            </div>
+                            <div class="form-group">
+                                    <label for="recipient-name" class="col-form-label">Customer Phone:</label>
+                                    <input type="text" maxlength="10" (keypress)="changeValue($event)" formControlName="customer_phone" class="form-control" id="recipient-name">
+                                    <small *ngIf="submitted && form.controls['customer_phone'].invalid" class=" mb-4 form-text text-muted danger text-left">
+                                        <div *ngIf="f.customer_phone.errors.required" class="text-danger">Please enter customer phone.</div>
+                                    </small>
+                            </div>
+                            <div class="form-group">
+                                    <label for="recipient-name" class="col-form-label">Order Amount:</label>
+                                    <input type="text" maxlength="10" (keypress)="changeValue($event)" formControlName="order_amount" class="form-control" id="recipient-name">
+                                    <small *ngIf="submitted && form.controls['order_amount'].invalid" class=" mb-4 form-text text-muted danger text-left">
+                                        <div *ngIf="f.order_amount.errors.required" class="text-danger">Please enter order amount.</div>
+                                    </small>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Add</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th class="th-lg">Order Number</th>
+            <th class="th-lg">Due date</th>
+            <th class="th-lg">Buyer Name</th>
+            <th class="th-lg">Address</th>
+            <th class="th-lg">Contact No.</th>
+            <th class="th-lg">Order Amount</th>
+            <th class="th-lg">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let list of orderList; let i = index">
+            <th scope="row">{{i+1}}</th>
+            <td>{{list.order_number}}</td>
+            <td>{{dateTime(list.order_due_date)}}</td>
+            <td>{{list.customer_buyer_name}}</td>
+            <td>{{list.customer_address}}</td>
+            <td>{{list.customer_phone}}</td>
+            <td>{{list.order_amount}}</td>
+            <td width="20%"><a routerLink="/edit-order/{{list._id}}" class="btn btn-info">Edit</a><a (click)="deleteOrder(list._id)" class="btn btn-danger ml-2">Delete</a></td>
+        </tr>
+        <tr *ngIf = "orderList && orderList.length === 0">
+            <td width="100%">No Data Available</td>
+        </tr>
+        <tr>
+            <th width="20%">Order Total:</th>
+            <td>${{orderTotal}}</td>
+        </tr>
+        </tbody>
+        </table>
+    </div>
+</div>
